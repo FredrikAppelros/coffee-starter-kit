@@ -1,0 +1,6 @@
+{
+  "name": "coffee-starter-kit",
+  "dependencies": {
+    "bootstrap": "~3.3.1"
+  }
+}
