@@ -10,10 +10,16 @@ First of all, [Node.js](http://nodejs.org/) and [npm](https://www.npmjs.com/) ne
 npm install -g gulp bower
 ```
 
+Since you probably want to create your own Git repository for you project you can easily export the starter kit to another directory:
+
+```
+gulp --export /path/to/project
+```
+
 Now the local packages needs to be installed; run the following:
 
 ```
-npm install && bower install
+cd /path/to/project && npm install && bower install
 ```
 
 ## Usage
