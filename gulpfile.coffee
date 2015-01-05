@@ -6,7 +6,7 @@ browserify = require 'browserify'
 transform = require 'vinyl-transform'
 sourcemaps = require 'gulp-sourcemaps'
 uglify = require 'gulp-uglify'
-concat = require 'gulp-concat'
+rename = require 'gulp-rename'
 less = require 'gulp-less'
 autoprefix = new (require 'less-plugin-autoprefix')
 cleancss = new (require 'less-plugin-clean-css')
@@ -23,6 +23,9 @@ paths =
   coffee: 'src/coffee/**/*.coffee'
   less: 'src/less/**/*.less'
   css: 'app/css'
+  entry: [
+    'src/coffee/app.coffee'
+  ]
   export: [
     'app/html/index.html'
     'src/coffee/app.coffee'
@@ -44,11 +47,11 @@ compileCoffee = ->
     ).bundle()
 
   Q.Promise (resolve) ->
-    gulp.src('src/coffee/app.coffee')
+    gulp.src(paths.entry)
       .pipe(bundle)
       .pipe(sourcemaps.init loadMaps: true)
         .pipe(uglify())
-        .pipe(concat 'app.min.js')
+        .pipe(rename extname: '.min.js')
       .pipe(sourcemaps.write '.')
       .pipe(gulp.dest 'app/js')
       .on('end', resolve)
@@ -58,7 +61,7 @@ compileLess = ->
     gulp.src(paths.less)
       .pipe(sourcemaps.init())
         .pipe(less plugins: [autoprefix, cleancss])
-        .pipe(concat 'style.min.css')
+        .pipe(rename extname: '.min.css')
       .pipe(sourcemaps.write())
       .pipe(gulp.dest paths.css)
       .on('end', resolve)
